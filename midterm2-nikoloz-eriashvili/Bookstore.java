@@ -35,7 +35,7 @@ public class Bookstore {
     public void saveState() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("state.csv"))) {
             for (Publisher publisher : publishers) {
-                writer.write(publisher.getName() + ";" + publisher.getAddress());
+                writer.write(publisher.getName() + "," + publisher.getAddress());
                 writer.newLine();
             }
         } catch (IOException e) {
@@ -48,7 +48,7 @@ public class Bookstore {
         try (BufferedReader reader = new BufferedReader(new FileReader("state.csv"))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(";");//i use ";" to seperate because some addresses might have "," and it messes the whole thing up
+                String[] parts = line.split(",");
                 if (parts.length == 2) {
                     publishers.add(new Publisher(parts[0], parts[1]));
                 }
@@ -66,8 +66,8 @@ public class Bookstore {
         restoredBookstore.restoreState();
 
         // Create publishers
-        Publisher pub1 = new Publisher("Penguin Random House", "New York, NY");
-        Publisher pub2 = new Publisher("HarperCollins", "New York, NY");
+        Publisher pub1 = new Publisher("Penguin Random House", "New York");
+        Publisher pub2 = new Publisher("HarperCollins", "New York");
 
         // Create a bookstore
         Bookstore bookstore = new Bookstore("City Bookstore");
@@ -82,6 +82,10 @@ public class Bookstore {
 
         System.out.println(pub1.getName());
         System.out.println(pub2.getAddress());
+        System.out.println(pub1.getAddress());
+        System.out.println(pub2.getName());
+
+
 
         //print all bookstores
         System.out.println(bookstore);
